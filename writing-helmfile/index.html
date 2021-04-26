@@ -346,13 +346,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#helmfile-values-vs-helm-values" class="md-nav__link">
-    Helmfile .Values vs Helm .Values
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#missing-keys-and-default-values" class="md-nav__link">
     Missing keys and Default values
   </a>
@@ -527,13 +520,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#helmfile-values-vs-helm-values" class="md-nav__link">
-    Helmfile .Values vs Helm .Values
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#missing-keys-and-default-values" class="md-nav__link">
     Missing keys and Default values
   </a>
@@ -590,19 +576,6 @@
                 
                 <h1 id="the-helmfile-best-practices-guide">The Helmfile Best Practices Guide<a class="headerlink" href="#the-helmfile-best-practices-guide" title="Permanent link">&para;</a></h1>
 <p>This guide covers the Helmfile’s considered patterns for writing advanced helmfiles. It focuses on how helmfile should be structured and executed.</p>
-<h2 id="helmfile-values-vs-helm-values">Helmfile .Values vs Helm .Values<a class="headerlink" href="#helmfile-values-vs-helm-values" title="Permanent link">&para;</a></h2>
-<p>Templating engine of Helmfile uses the same pipeline name <code>.Values</code> as Helm, so in some use-cases <code>.Values</code> of Helmfile and<br />
-Helm can be seen in the same file. To distinguish these two kinds of <code>.Values</code>, Helmfile provides an alias <code>.StateValues</code><br />
-for its <code>.Values</code>.</p>
-<pre><code>app:
-  project: {{.Environmont.Name}}-{{.StateValues.project}} # Same as {{.Environmont.Name}}-{{.Values.project}}
-
-{{`
-extraEnvVars:
-- name: APP_PROJECT
-  value: {{.Values.app.project}}
-`}}
-</code></pre>
 <h2 id="missing-keys-and-default-values">Missing keys and Default values<a class="headerlink" href="#missing-keys-and-default-values" title="Permanent link">&para;</a></h2>
 <p>helmfile tries its best to inform users for noticing potential mistakes.</p>
 <p>One example of how helmfile achieves it is that, <code>helmfile</code> fails when you tried to access missing keys in environment values.</p>
@@ -669,7 +642,7 @@ releases:
 </code></pre>
 <p>Release Templating supports the following parts of release definition:<br />
 - basic fields: <code>name</code>, <code>namespace</code>, <code>chart</code>, <code>version</code><br />
-- boolean fields: <code>installed</code>, <code>wait</code>, <code>waitForJobs</code>, <code>tillerless</code>, <code>verify</code> by the means of additional text<br />
+- boolean fields: <code>installed</code>, <code>wait</code>, <code>tillerless</code>, <code>verify</code> by the means of additional text<br />
   fields designed for templating only: <code>installedTemplate</code>, <code>waitTemplate</code>, <code>tillerlessTemplate</code>, <code>verifyTemplate</code><br />
 <code>yaml
   # ...
@@ -834,7 +807,7 @@ myname: &quot;dog&quot;
   recreatePods: false
   force: true
 </code></pre>
-<p>Each go template is rendered in the context where <code>.Values</code> is inherited from the previous part.</p>
+<p>Each go template is rendered in the context where <code>.Values</code> is inherited from the previous part. </p>
 <p>So in <code>mydefaults.yaml.gotmpl</code>, both <code>.Values.kubeContext</code> and <code>.Values.wait</code> are valid as they do exist in the environment values inherited from the previous part(=the first part) of your <code>helmfile.yaml.gotmpl</code>, and therefore the template is rendered to:</p>
 <pre><code class="language-yaml">helmDefaults:
   tillerNamespace: kube-system
@@ -878,7 +851,7 @@ releases:
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 23, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2021</span>
     
   </small>
 </div>
